@@ -1,4 +1,4 @@
-func solution(numer1 int, denom1 int, numer2 int, denom2 int) [2]int {
+func solution(numer1 int, denom1 int, numer2 int, denom2 int) []int {
     
     var numer3 int = denom2 * numer1 + numer2 * denom1
     var denom3 int = denom1 * denom2
@@ -11,9 +11,9 @@ func solution(numer1 int, denom1 int, numer2 int, denom2 int) [2]int {
         }
     }
     
-    var result [2]int
-    result[0] = numer3 / i
-    result[1] = denom3 / i
+    var result []int
+    result = append(result, numer3 / i)
+    result = append(result, denom3 / i)
     
     return result
 }
