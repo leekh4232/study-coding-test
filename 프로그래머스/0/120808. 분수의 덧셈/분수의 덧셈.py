@@ -1,5 +1,5 @@
 def solution(numer1, denom1, numer2, denom2):
-    answer = []
+    answer = [0, 0]
     
     numer3 = denom2 * numer1 + numer2 * denom1
     denom3 = denom1 * denom2
@@ -10,7 +10,7 @@ def solution(numer1, denom1, numer2, denom2):
         if numer3 % i == 0 and denom3 % i == 0:
             break
     
-    answer.append(numer3 / i)
-    answer.append(denom3 / i)
+    answer[0] = numer3 / i
+    answer[1] = denom3 / i
 
     return answer
