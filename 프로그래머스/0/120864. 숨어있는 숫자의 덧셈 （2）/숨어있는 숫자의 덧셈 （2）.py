@@ -1,10 +1,9 @@
 def solution(my_string):
     answer = 0
 
-    buffer = []
     n = len(my_string)
     i = 0
-    
+
     while i < n:
         tmp = ""
 
@@ -16,11 +15,10 @@ def solution(my_string):
                 break
 
         if tmp:
-            buffer.append(int(tmp))
+            answer += int(tmp)
 
         i += 1
 
-    answer = sum(buffer)
     return answer
 
 if __name__ == "__main__":
