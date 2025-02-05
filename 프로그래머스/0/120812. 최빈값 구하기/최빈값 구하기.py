@@ -13,24 +13,29 @@ def solution(array):
             frequency_dict[num] = 1
 
     # 최대 빈도 및 최빈값 찾기
-    max_freq = 0
-    mode = -1
+    freq_list = list(frequency_dict.items())
+    max_freq = freq_list[0][1]
+    max_key = freq_list[0][0]
     is_unique = True
 
-    for num, freq in frequency_dict.items():
+    for i in range(1, len(freq_list)):
+        key, freq = freq_list[i]
+
         if freq > max_freq:
             max_freq = freq
-            mode = num
+            max_key = key
             is_unique = True
         elif freq == max_freq:
             is_unique = False
 
     if is_unique:
-        return mode
-    return -1
+        answer = max_key
+    else:
+        answer = -1
+
+    return answer
 
 
-if __name__ == "__main__":
-    print(solution([1, 2, 3, 3, 3, 4])) # 3
-    print(solution([1, 1, 2, 2]))       # -1
-    print(solution([1]))                # 1
+print(solution([1, 2, 3, 3, 3, 4])) # 3
+print(solution([1, 1, 2, 2]))       # -1
+print(solution([1]))                # 1
