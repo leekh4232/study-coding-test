@@ -29,4 +29,5 @@ def solution(polynomial):
     return answer
 
 if __name__ == "__main__":
-    print(solution("1"))
+    print(solution("3x + 7 + x"))   # 4x + 7
+    print(solution("x + x + x"))    # 3x
