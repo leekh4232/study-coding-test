@@ -28,3 +28,9 @@ def solution(array):
     if is_unique:
         return mode
     return -1
+
+
+if __name__ == "__main__":
+    print(solution([1, 2, 3, 3, 3, 4])) # 3
+    print(solution([1, 1, 2, 2]))       # -1
+    print(solution([1]))                # 1
