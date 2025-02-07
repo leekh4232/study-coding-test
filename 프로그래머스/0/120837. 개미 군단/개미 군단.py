@@ -5,3 +5,7 @@ def solution(hp):
     c = a1 % 3
     
     return a + b + c
+
+print(solution(23))     # 결과값 : 5
+print(solution(24))     # 결과값 : 6
+print(solution(999))    # 결과값 : 201
