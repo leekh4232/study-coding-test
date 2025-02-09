@@ -7,3 +7,6 @@ def solution(n):
             answer += 1
                 
     return answer
+
+print(solution(20))     # 6
+print(solution(100))    # 9
