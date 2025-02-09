@@ -10,10 +10,7 @@ def solution(numer1, denom1, numer2, denom2):
         if numer3 % i == 0 and denom3 % i == 0:
             break
     
-    answer[0] = numer3 // i
-    answer[1] = denom3 // i
+    answer[0] = numer3 / i
+    answer[1] = denom3 / i
 
     return answer
-
-print(solution(1, 2, 3, 4))     # [5, 4]
-print(solution(9, 2, 1, 3))     # [29, 6]
