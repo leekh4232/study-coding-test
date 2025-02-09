@@ -1,12 +1,9 @@
 n = int(input())
-
-str = ""
     
 for i in range(n):
+    str = ""
+    
     for j in range(i+1):
         str += "*"
 
-    if i + 1 < n:
-        str += "\n"
-
-print(str)
+    print(str)
