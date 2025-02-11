@@ -1,6 +1,6 @@
 # [level 0] 삼각형의 완성조건 (1) - 120889 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120889) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120889?language=python3) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 04일 21:38:30
+2025년 02월 11일 16:37:29
 
 ### 문제 설명
 
