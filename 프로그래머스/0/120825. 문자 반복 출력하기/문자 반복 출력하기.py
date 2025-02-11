@@ -5,3 +5,5 @@ def solution(my_string, n):
         answer += m * n
     
     return answer
+
+print(solution("hello", 3))
