@@ -8,6 +8,5 @@ def solution(numbers, k):
 
     return answer
 
-if __name__ == "__main__":
-    print(solution([1,2,3,4], 2))
-    print(solution([1,2,3,4,5,6], 5))
+print(solution([1,2,3,4], 2))
+print(solution([1,2,3,4,5,6], 5))
