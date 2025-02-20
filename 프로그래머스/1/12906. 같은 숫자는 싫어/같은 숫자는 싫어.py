@@ -1,13 +1,14 @@
 def solution(arr):
     answer = []
-    previous = None  # 이전 숫자를 저장할 변수 초기화
+    previous = None             # 이전 숫자를 저장할 변수 초기화
 
     for num in arr:
-        if num != previous:  # 현재 숫자가 이전 숫자와 다르면 추가
+        if num != previous:     # 현재 숫자가 이전 숫자와 다르면 추가
             answer.append(num)
-            previous = num  # 이전 숫자를 현재 숫자로 업데이트
+            previous = num      # 이전 숫자를 현재 숫자로 업데이트
 
     return list(answer)
+
 
 # ✅ 예제 테스트 실행
 if __name__ == "__main__":
