@@ -1,6 +1,6 @@
 def solution(age):
-    answer = 2022 - age + 1
-    return answer
+    return 2022 - age + 1  # 출생 연도 계산
 
-print(solution(40))      # 결과값 : 1983
-print(solution(23))      # 결과값 : 2000
+# ✅ 예제 테스트 실행
+print(solution(40))  # 결과: 1983
+print(solution(23))  # 결과: 2000
