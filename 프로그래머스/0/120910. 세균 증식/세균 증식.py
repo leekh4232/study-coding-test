@@ -1,6 +1,6 @@
 def solution(n, t):
-    answer = 2 ** t * n
-    return answer
+    return n * (2 ** t)  # 세균 개수 계산
 
-print(solution(2, 10))       # 결과값 : 2048
-print(solution(7, 15))       # 결과값 : 229376
+# ✅ 예제 테스트 실행
+print(solution(2, 10))  # 결과: 2048
+print(solution(7, 15))  # 결과: 229376
