@@ -1,10 +1,13 @@
 def solution(arr):
-    answer = []
-    previous = None  # 이전 숫자를 저장할 변수 초기화
+    stack = []  # 스택 역할을 하는 리스트
 
     for num in arr:
-        if num != previous:  # 현재 숫자가 이전 숫자와 다르면
-            answer.append(num)  # answer 리스트에 추가
-            previous = num  # 이전 숫자를 현재 숫자로 업데이트
+        if not stack or stack[-1] != num:  # 스택이 비어있거나 마지막 원소와 다르면 추가
+            stack.append(num)
 
-    return answer
+    return stack
+
+# ✅ 예제 테스트 실행
+if __name__ == "__main__":
+    print(solution([1, 1, 3, 3, 0, 1, 1]))  # 결과: [1, 3, 0, 1]
+    print(solution([4, 4, 4, 3, 3]))        # 결과: [4, 3]
