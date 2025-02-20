@@ -1,5 +1,7 @@
+from collections import deque
+
 def solution(s):
-    stack = []  # 스택 초기화
+    stack = deque()  # 스택 초기화
 
     for char in s:
         if char == '(':
