@@ -1,9 +1,9 @@
-n = int(input())            # 입력값 : 3
-    
-for i in range(n):          # i(행) -> 0~n 전까지 
-    star = ""               # 매 행마다 출력할 내용을 초기화 함
-    
-    for j in range(i+1):    # 매 행마다 1개씩 출력할 별의 수를 늘림
-        star += "*"         # 빈 문자열에 별을 누적해서 연결함 (문자열 덧셈은 연결)
+n = int(input())            # 정수 입력 (삼각형의 높이 및 너비 설정)
 
-    print(star)             # 행단위 출력
+for i in range(n):          # i(행) -> 0부터 n-1까지 반복
+    star = ""               # 매 행마다 출력할 별을 저장할 문자열을 초기화
+
+    for j in range(i+1):    # i번째 행에서 출력할 별의 개수 = i+1개
+        star += "*"         # 빈 문자열에 별을 하나씩 추가
+
+    print(star)             # 현재 행의 별 출력
