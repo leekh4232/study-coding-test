@@ -6,4 +6,5 @@ def solution(my_string, n):
 
     return answer  # 최종 결과 반환
 
-print(solution("hello", 3))
+# 테스트 예제 실행
+print(solution("hello", 3))  # "hhheeellllllooo"
