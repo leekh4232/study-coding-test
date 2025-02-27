@@ -1,15 +1,16 @@
 def solution(my_string, letter):
-    # [풀이1] 문자열의 replace() 메서드 사용
-    #answer = my_string.replace(letter, '')
+    # [풀이1] replace()를 사용하여 letter를 빈 문자열로 치환
+    # return my_string.replace(letter, '')
 
-    # [풀이2] 문자열을 순회하면서 letter와 같지 않은 문자만 answer에 추가
+    # [풀이2] 반복문을 이용하여 letter가 아닌 문자만 추가
     answer = ''
 
-    for m in my_string:
-        if m != letter:
+    for m in my_string:  # 문자열의 각 문자 순회
+        if m != letter:  # letter와 다른 문자만 추가
             answer += m
 
-    return answer
+    return answer  # 변환된 문자열 반환
 
-print(solution("abcdef", "f"))      # abcde
-print(solution("BCBdbe", "B"))      # Cdbe
+# 테스트 예제 실행
+print(solution("abcdef", "f"))      # "abcde"
+print(solution("BCBdbe", "B"))      # "Cdbe"
