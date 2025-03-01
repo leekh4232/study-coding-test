@@ -8,21 +8,14 @@ def solution(letter):
         '-.--':'y','--..':'z'
     }
 
-    # 입력된 모스 부호 문자열을 공백(' ')을 기준으로 분리하여 리스트로 저장
-    letter = letter.split(' ')
+    letter = letter.split(' ')  # 모스 부호를 공백 기준으로 나누어 리스트로 저장
+    answer = []  # 변환된 알파벳을 저장할 리스트 초기화
 
-    # 변환된 알파벳을 저장할 리스트 초기화
-    answer = []
+    for i in letter:  # 분리된 모스 부호를 하나씩 순회하며 변환
+        answer.append(morse[i])  # 딕셔너리를 이용하여 알파벳으로 변환 후 리스트에 추가
 
-    # 분리된 모스 부호를 하나씩 반복하여 변환
-    for i in letter:
-        answer.append(morse[i])  # 해당 모스 부호를 딕셔너리에서 찾아 변환 후 리스트에 추가
+    return ''.join(answer)  # 리스트에 저장된 알파벳들을 하나의 문자열로 변환하여 반환
 
-    # 리스트에 저장된 알파벳들을 문자열로 합쳐 최종 결과 반환
-    return ''.join(answer)
-
-# 예제 실행 (출력: "hello")
-print(solution(".... . .-.. .-.. ---"))
-
-# 예제 실행 (출력: "python")
-print(solution(".--. -.-- - .... --- -."))
+# ✅ 예제 테스트 실행
+print(solution(".... . .-.. .-.. ---"))  # "hello"
+print(solution(".--. -.-- - .... --- -."))  # "python"
