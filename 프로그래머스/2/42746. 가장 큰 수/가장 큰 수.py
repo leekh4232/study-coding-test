@@ -1,22 +1,27 @@
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[len(arr) // 2]  # 피벗 설정 (가운데 요소 선택)
+    left = [x for x in arr if x + pivot > pivot + x]  # 피벗보다 앞에 와야 할 요소
+    middle = [x for x in arr if x + pivot == pivot + x]  # 동일한 경우
+    right = [x for x in arr if x + pivot < pivot + x]  # 피벗보다 뒤에 와야 할 요소
+
+    return quick_sort(left) + middle + quick_sort(right)
+
 def solution(numbers):
-    answer = ''
+    # 숫자들을 문자열로 변환
+    num_strs = list(map(str, numbers))
+    
+    # 커스텀 정렬 (퀵 정렬 적용)
+    sorted_numbers = quick_sort(num_strs)
+    
+    # 정렬된 리스트를 이어붙여 최종 결과 생성
+    result = "".join(sorted_numbers)
+    
+    # 결과가 "000" 같은 경우 "0" 반환
+    return result if result[0] != "0" else "0"
 
-    #  문자열 비교를 통해 숫자들을 정렬해야 하므로 문자열로 변환
-    numbers = list(map(str, numbers))
-
-    # 3의 배수로 만들어서 비교
-    # 숫자 3과 30을 비교할 때, 3을 세 번 반복하면 333, 30을 세 번 반복하면 303030이 됨.
-    # 이 두 문자열을 비교하면 333이 더 크기 때문에 3이 30보다 앞에 오게 된다.
-    numbers.sort(key=lambda x: x*3, reverse=True)
-    answer = str(int(''.join(numbers)))
-
-    return answer
-
-if __name__ == '__main__':
-    numbers = [6, 10, 2]
-    # 6210
-    print(solution(numbers))
-
-    numbers = [3, 30, 34, 5, 9]
-    # 9534330
-    print(solution(numbers))
+# ✅ 예제 테스트 실행
+print(solution([6, 10, 2]))  # 결과: "6210"
+print(solution([3, 30, 34, 5, 9]))  # 결과: "9534330"
