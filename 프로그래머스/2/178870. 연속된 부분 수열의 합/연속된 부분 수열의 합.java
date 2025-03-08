@@ -1,51 +1,42 @@
 import java.util.Arrays;
 
-/**
- * 프로그래머스 178870번 - 연속된 부분 수열의 합
- * https://school.programmers.co.kr/learn/courses/30/lessons/178870
- */
 public class Solution {
     public int[] solution(int[] sequence, int k) {
-        // 부분합 배열 생성
-        int[] prefixSum = new int[sequence.length + 1];
-        for (int i = 1; i <= sequence.length; i++) {
-            prefixSum[i] = prefixSum[i - 1] + sequence[i - 1];
-        }
+        int left = 0, right = 0; // 투 포인터 초기화
+        int currentSum = sequence[0]; // 현재 부분합 초기화
+        int minLength = Integer.MAX_VALUE; // 최소 길이를 무한대로 초기화
+        int[] answer = new int[2]; // 정답 저장 배열
 
-        // 결과값 초기화
-        int[] answer = new int[2];
-        int minLength = Integer.MAX_VALUE;
-
-        // 각 구간을 탐색하여 합이 k가 되는 구간 찾기
-        for (int i = 0; i < sequence.length; i++) {
-            for (int j = i; j < sequence.length; j++) {
-                int currentSum = prefixSum[j + 1] - prefixSum[i];
-
-                if (currentSum == k) {
-                    int currentLength = j - i;
-                    if (currentLength < minLength) {
-                        minLength = currentLength;
-                        answer[0] = i;
-                        answer[1] = j;
-                    }
-                    break; // 부분합이 k가 되면 더 길어진 구간은 필요 없음
+        while (right < sequence.length) { // 오른쪽 포인터가 범위를 벗어나지 않도록 설정
+            if (currentSum == k) { // 부분합이 k와 같을 경우
+                int currentLength = right - left; // 현재 부분 수열의 길이 계산
+                if (currentLength < minLength) { // 최소 길이 갱신
+                    minLength = currentLength;
+                    answer[0] = left;
+                    answer[1] = right;
                 }
+                currentSum -= sequence[left]; // 왼쪽 포인터 이동을 위해 값 제거
+                left++; // 왼쪽 포인터 증가
+            } else if (currentSum < k) { // 부분합이 k보다 작다면
+                right++; // 오른쪽 포인터 이동
+                if (right < sequence.length) { // 배열 범위 체크 후 값 추가
+                    currentSum += sequence[right];
+                }
+            } else { // 부분합이 k보다 크다면
+                currentSum -= sequence[left]; // 왼쪽 포인터 이동을 위해 값 제거
+                left++; // 왼쪽 포인터 증가
             }
         }
 
-        return answer;
+        return answer; // 결과 반환
     }
 
     public static void main(String[] args) {
         Solution sol = new Solution();
 
-        int[] result = sol.solution(new int[]{1, 2, 3, 4, 5}, 7);
-        System.out.println(Arrays.toString(result));    // [2, 3]
-
-        result = sol.solution(new int[]{1, 1, 1, 2, 3, 4, 5}, 5);
-        System.out.println(Arrays.toString(result));    // [6, 6]
-
-        result = sol.solution(new int[]{2, 2, 2, 2, 2}, 6);
-        System.out.println(Arrays.toString(result));    // [0, 2]
+        // 테스트 케이스 실행
+        System.out.println(Arrays.toString(sol.solution(new int[]{1, 2, 3, 4, 5}, 7))); // [2, 3]
+        System.out.println(Arrays.toString(sol.solution(new int[]{1, 1, 1, 2, 3, 4, 5}, 5))); // [6, 6]
+        System.out.println(Arrays.toString(sol.solution(new int[]{2, 2, 2, 2, 2}, 6))); // [0, 2]
     }
 }
