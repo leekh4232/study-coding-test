@@ -20,9 +20,12 @@ public class Solution {
             if (people[i] + people[j] <= limit) {
                 // 가장 가벼운 사람을 태우고 인덱스 증가
                 i++;
+                // 가장 무거운 사람을 태우고 인덱스 감소
+                j--;
+            } else {
+                // 가장 무거운 사람만 태우고 인덱스 감소
+                j--;
             }
-            // 가장 무거운 사람을 태우고 인덱스 감소
-            j--;
         }
 
         // 필요한 구명보트의 수 반환
@@ -31,7 +34,11 @@ public class Solution {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        System.out.println(sol.solution(new int[] {70, 50, 80, 50}, 100)); // 결과 출력 --> 3
-      System.out.println(sol.solution(new int[] {70, 80, 50}, 100)); // 결과 출력 --> 3
+
+        System.out.println(sol.solution(
+            new int[] {70, 50, 80, 50}, 100)); // 결과 출력 --> 3
+
+        System.out.println(sol.solution(
+            new int[] {70, 80, 50}, 100)); // 결과 출력 --> 3
     }
 }
