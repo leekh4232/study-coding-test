@@ -11,9 +11,8 @@ public class Solution {
 
         // 원형 수열 처리를 위해 수열을 두 배로 확장
         int[] ext = new int[n * 2];
-        for (int i = 0; i < n * 2; i++) {
-            ext[i] = elements[i % n];
-        }
+        System.arraycopy(elements, 0, ext, 0, n);
+        System.arraycopy(elements, 0, ext, n, n);
 
         // 부분 수열의 길이를 1부터 n까지 증가시키며 탐색
         for (int size = 1; size <= n; size++) {
