@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Solution {
-    public static int solution(int[] queue1, int[] queue2) {
+    public int solution(int[] queue1, int[] queue2) {
         // 두 큐의 합을 구함
         long sum1 = Arrays.stream(queue1).sum();
         long sum2 = Arrays.stream(queue2).sum();
@@ -57,8 +57,9 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        System.out.println(solution(new int[]{3, 2, 7, 2}, new int[]{4, 6, 5, 1})); // 2
-        System.out.println(solution(new int[]{1, 2, 1, 2}, new int[]{1, 10, 1, 2})); // 7
-        System.out.println(solution(new int[]{1, 1}, new int[]{1, 5})); // -1
+        Solution sol = new Solution();
+        System.out.println(sol.solution(new int[]{3, 2, 7, 2}, new int[]{4, 6, 5, 1})); // 2
+        System.out.println(sol.solution(new int[]{1, 2, 1, 2}, new int[]{1, 10, 1, 2})); // 7
+        System.out.println(sol.solution(new int[]{1, 1}, new int[]{1, 5})); // -1
     }
 }
