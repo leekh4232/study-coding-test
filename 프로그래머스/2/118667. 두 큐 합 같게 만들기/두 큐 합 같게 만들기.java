@@ -1,6 +1,6 @@
 import java.util.*;
 
-class Solution {
+public class Solution {
     public int solution(int[] queue1, int[] queue2) {
         // 두 큐의 합을 구함
         long sum1 = Arrays.stream(queue1).sum();
