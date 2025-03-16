@@ -1,24 +1,17 @@
-public class Solution {
+class Solution {
     public int solution(int angle) {
-        int answer = 0;
-
-        if (angle < 90) {
-            answer = 1;
-        } else if (angle == 90) {
-            answer = 2;
-        } else if (angle > 90 && angle < 180) {
-            answer = 3;
-        } else {
-            answer = 4;
-        }
-
-        return answer;
+        if (angle < 90) return 1; // 예각
+        if (angle == 90) return 2; // 직각
+        if (angle < 180) return 3; // 둔각
+        return 4; // 평각
     }
 
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(70));
-        System.out.println(s.solution(91));
-        System.out.println(s.solution(180));
+        
+        // 테스트 예제 실행
+        System.out.println(s.solution(70));  // 1
+        System.out.println(s.solution(91));  // 3
+        System.out.println(s.solution(180)); // 4
     }
 }
