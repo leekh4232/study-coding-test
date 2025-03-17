@@ -6,12 +6,12 @@ public class Solution {
         Scanner sc = new Scanner(System.in); 
         
         // 공백이 없는 단일 문자열을 입력받음
-        String a = sc.next(); 
-        
-        // 입력받은 문자열을 출력
-        System.out.println(a); 
+        String a = sc.next();  
         
         // Scanner 객체 닫기 (자원 해제)
         sc.close(); 
+        
+        // 입력받은 문자열을 출력
+        System.out.println(a);
     }
 }
