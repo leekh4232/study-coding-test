@@ -1,14 +1,17 @@
 class Solution {
     public int solution(int price) {
+        int answer = 0;
         if (price >= 500000) {
-            return (int) (price * 0.8); // 20% 할인 적용
+            answer = (int) (price * 0.8); // 20% 할인 적용
         } else if (price >= 300000) {
-            return (int) (price * 0.9); // 10% 할인 적용
+            answer = (int) (price * 0.9); // 10% 할인 적용
         } else if (price >= 100000) {
-            return (int) (price * 0.95); // 5% 할인 적용
+            answer = (int) (price * 0.95); // 5% 할인 적용
         } else {
-            return price; // 할인 없음
+            answer = price; // 할인 없음
         }
+
+        return answer;
     }
 
     public static void main(String[] args) {
