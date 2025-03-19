@@ -1,6 +1,14 @@
 class Solution {
     public int solution(int num1, int num2) {
-        return (num1 == num2) ? 1 : -1; // 삼항 연산자로 두 값 비교
+        int answer = 0;
+
+        if (num1 == num2) {
+            answer = 1;
+        } else {
+            answer = -1;
+        }
+
+        return answer;
     }
 
     public static void main(String[] args) {
