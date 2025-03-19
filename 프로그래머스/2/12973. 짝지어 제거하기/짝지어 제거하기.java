@@ -1,31 +1,31 @@
-import java.util.Deque;
-import java.util.ArrayDeque;
+import java.util.*;
 
 public class Solution {
-    public int solution(String s) {
-        // 문자를 저장할 deque 초기화
+
+    // 짝지어 제거하기를 성공적으로 수행할 수 있는지 확인하는 메서드
+    public static int solution(String s) {
+        // 문자 제거를 위한 스택 초기화
         Deque<Character> stack = new ArrayDeque<>();
 
-        // 문자열의 각 문자를 순회
-        for (char charAt : s.toCharArray()) {
-            // deque가 비어 있지 않고, deque의 최상단 문자와 현재 문자가 같으면
-            if (!stack.isEmpty() && stack.peekLast() == charAt) {
-                // deque의 최상단 문자를 제거
-                stack.pollLast();
-            } else {
-                // 그렇지 않으면 현재 문자를 deque에 추가
-                stack.addLast(charAt);
+        // 문자열을 순회하며 문자 제거 처리
+        for (char ch : s.toCharArray()) {
+            // 스택이 비어있지 않고, 최상단 문자와 현재 문자가 같으면 제거
+            if (!stack.isEmpty() && stack.peek() == ch) {
+                stack.pop();
+            } 
+            // 그렇지 않으면 스택에 추가
+            else {
+                stack.push(ch);
             }
         }
 
-        // deque가 비어 있으면 모든 문자를 짝지어 제거할 수 있었음을 의미하므로 1
-        // deque가 비어 있지 않으면 짝지어 제거할 수 없는 문자가 남아 있음을 의미하므로 0
+        // 스택이 비어 있으면 모든 문자가 제거된 것이므로 1, 아니면 0 반환
         return stack.isEmpty() ? 1 : 0;
     }
 
     public static void main(String[] args) {
-        Solution sol = new Solution();
-        String s = "baabaa"; // 테스트 값
-        System.out.println(sol.solution(s)); // 결과 출력
+        // ✅ 예제 테스트 실행
+        System.out.println(solution("baabaa")); // 결과: 1
+        System.out.println(solution("cdcd"));   // 결과: 0
     }
 }
