@@ -1,47 +1,44 @@
-/**
- * 프로그래머스 12909번 - 올바른_괄호
- * https://school.programmers.co.kr/learn/courses/30/lessons/12909
- */
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
 public class Solution {
-    // 문자열 s가 올바른 괄호 문자열인지 확인하는 함수
-    // --> Stack 자료구조를 사용하여 여는 괄호와 닫는 괄호의 짝을 맞춤
-    public boolean solution(String s) {
-        // 빈 스택을 생성 --> 여는 괄호를 저장하는 용도
-        Deque<Character> deque = new ArrayDeque<>();
 
-        // 문자열 s의 각 글자를 순회
+    // 올바른 괄호 문자열인지 판별하는 메서드
+    public static boolean solution(String s) {
+        // 스택을 사용하여 괄호를 관리
+        Deque<Character> stack = new ArrayDeque<>();
+
+        // 문자열을 순회하며 검사
         for (char ch : s.toCharArray()) {
-            if (ch == '(') {            // 여는 괄호인 경우
-                deque.push(ch);          // 스택에 추가
-            } else if (ch == ')') {     // 닫는 괄호인 경우
-                if (deque.isEmpty()) {  // 스택이 비어 있으면 false
+            // 여는 괄호 '('는 스택에 추가
+            if (ch == '(') {
+                stack.push(ch);
+            } 
+            // 닫는 괄호 ')'가 나오면 처리
+            else {
+                // 스택이 비어 있으면 올바르지 않은 괄호
+                if (stack.isEmpty()) {
                     return false;
                 }
-                deque.pop(); // 스택에서 여는 괄호를 팝(pop)하여 짝을 맞춤
+                // 스택에서 '(' 제거
+                stack.pop();
             }
         }
 
-        // 문자열 s의 모든 문자를 순회한 후, 스택이 비어 있는지 확인
-        // --> 올바른 괄호 문자열이라면 최종적으로는 스택이 비어 있어야 함
-        return deque.isEmpty();
+        // 스택이 비어 있으면 올바른 괄호, 그렇지 않으면 잘못된 괄호
+        return stack.isEmpty();
     }
 
     public static void main(String[] args) {
-        Solution ex = new Solution();
-
-        // 테스트 케이스 1 -> true
-        System.out.println(ex.solution("()()"));
-
-        // 테스트 케이스 2 -> true
-        System.out.println(ex.solution("(())()"));
-
-        // 테스트 케이스 3 -> false
-        System.out.println(ex.solution(")()("));
-
-        // 테스트 케이스 4 -> false
-        System.out.println(ex.solution("(()("));
+        // ✅ 예제 테스트 실행
+        System.out.println(solution("()()"));     // true
+        System.out.println(solution("(())()"));   // true
+        System.out.println(solution(")()("));     // false
+        System.out.println(solution("(()("));     // false
+        System.out.println(solution("()"));       // true
+        System.out.println(solution(")("));       // false
+        System.out.println(solution(")"));        // false
+        System.out.println(solution("("));        // false
+        System.out.println(solution("))"));       // false
+        System.out.println(solution("(("));       // false
     }
 }
