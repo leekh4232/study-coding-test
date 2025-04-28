@@ -26,6 +26,5 @@ def solution(people, limit):
     return answer
 
 # 테스트 케이스 실행
-if __name__ == "__main__":
-    print(solution([70, 50, 80, 50], 100))  # 결과: 3
-    print(solution([70, 80, 50], 100))      # 결과: 3
+print(solution([70, 50, 80, 50], 100))  # 결과: 3
+print(solution([70, 80, 50], 100))      # 결과: 3
