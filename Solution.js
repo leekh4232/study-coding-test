@@ -1,5 +1,4 @@
 class PriorityQueue {
-<<<<<<< HEAD
     /** 내부 힙 배열 */
     #heap = [];
 
@@ -92,74 +91,36 @@ class PriorityQueue {
     }
 }
 
-export default PriorityQueue;
-=======
-    #heap = new Array(64);
-    #size = 0;
+function solution(priorities, location) {
+    // 우선순위와 인덱스를 함께 큐에 저장
+    const queue = priorities.map((priority, index) => [index, priority]); // (인덱스, 우선순위)
+    const pq = new PriorityQueue();
 
-    size() {
-        return this.#size;
+    // 우선순위 큐에 (우선순위 * -1, 인덱스) 형태로 저장 (최대 힙 역할)
+    for (let [_, priority] of queue) {
+        pq.push(-priority, priority);  // 우선순위 반전
     }
 
-    peek() {
-        console.log(this.#heap);
-        return this.#heap[1];
-    }
+    let executedCount = 0;
 
-    push(value) {
-        const heap = this.#heap;
-        const size = ++this.#size;
+    // 큐가 빌 때까지 반복
+    while (queue.length) {
+        const [currentIdx, currentPriority] = queue.shift();
 
-        if (size === heap.length) heap.length *= 2;
+        // 현재 프로세스의 우선순위가 최고 우선순위와 같다면 실행
+        if (currentPriority === pq.peek()) {
+            pq.pop();                 // 우선순위 큐에서 제거
+            executedCount++;          // 실행된 프로세스 개수 증가
 
-        heap[size] = value;
-        this.percolateUp();
-    }
-
-    percolateUp() {
-        const heap = this.#heap;
-        const size = this.#size;
-
-        let pos = size;
-        const item = heap[pos];
-
-        while (pos > 1) {
-            const parent = heap[Math.floor(pos / 2)];
-            if (parent <= item) break;
-            heap[pos] = parent;
-            pos = Math.floor(pos / 2);
+            if (currentIdx === location) {
+                return executedCount; // 찾던 프로세스면 실행 순서 반환
+            }
+        } else {
+            queue.push([currentIdx, currentPriority]); // 다시 큐 뒤로
         }
-
-        heap[pos] = item;
-    }
-
-    pop() {
-        const value = this.#heap[1];
-        if (value === undefined) return undefined;
-        const size = --this.#size;
-
-        this.#heap[1] = this.#heap[size + 1];
-        this.#heap[size + 1] = undefined;
-        this.percolateDown();
-        return value;
-    }
-
-    percolateDown() {
-        let pos = 1;
-        const item = this.#heap[pos];
-
-        while (pos * 2 <= this.#size) {
-            let childIndex = pos * 2 + 1;
-            if (childIndex > this.#size || this.#heap[pos * 2] < this.#heap[childIndex]) childIndex = pos * 2;
-            const child = this.#heap[childIndex];
-            if (item <= child) break;
-            this.#heap[pos] = child;
-            pos = childIndex;
-        }
-
-        this.#heap[pos] = item;
     }
 }
 
-export default PriorityQueue;
->>>>>>> 070a002b8c3022df1ab54a25396a98196ac84857
+// ✅ 테스트 예제 실행
+console.log(solution([2, 1, 3, 2], 2));  // 1
+console.log(solution([1, 1, 9, 1, 1, 1], 0));  // 5
