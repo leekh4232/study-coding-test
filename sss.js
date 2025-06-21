@@ -1,20 +1,37 @@
-import PriorityQueue from './PriorityQueue.js';
+// 빈 JSON 객체 생성
+const myDict = {};
 
-const pqueue = new PriorityQueue();
+// 값 삽입
+myDict["apple"] = 3;
+myDict["banana"] = 5;
 
-pqueue.push(2, 'CCC');
-pqueue.push(3, 'BBB');
-pqueue.push(1, 'AAA');
+// 값 조회 --> 3
+console.log(myDict["apple"]);
 
-console.log(`큐 사이즈: ${pqueue.size()}`);   	// 3
-console.log(`최상단 요소: ${pqueue.peek()}`);  		// AAA
+// 키 존재 여부 확인 --> true
+console.log("banana" in myDict);
 
-const item1 = pqueue.pop();
-console.log(`추출한 요소: ${item1}`);      		// AAA
-console.log(`큐 사이즈: ${pqueue.size()}`);   	// 2
-console.log(`최상단 요소: ${pqueue.peek()}`);  		// CCC
+// 값 수정
+myDict["apple"] = 10;
 
-const item2 = pqueue.pop();
-console.log(`추출한 요소: ${item2}`);        	// CCC
-console.log(`큐 사이즈: ${pqueue.size()}`);     	// 1
-console.log(`최상단 요소: ${pqueue.peek()}`);    	// BBB
+// 값 삭제
+delete myDict["banana"];
+
+// Map 객체 생성
+const myDict = new Map();
+
+// 값 삽입
+myDict.set("apple", 3);
+myDict.set("banana", 5);
+
+// 값 조회 --> 3
+console.log(myDict.get("apple"));
+
+// 키 존재 여부 확인 --> true
+console.log(myDict.has("banana"));
+
+// 값 수정
+myDict.set("apple", 10);
+
+// 값 삭제
+myDict.delete("banana");
