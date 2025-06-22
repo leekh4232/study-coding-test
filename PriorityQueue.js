@@ -1,93 +1,70 @@
 class PriorityQueue {
-    /** 내부 힙 배열 */
     #heap = [];
 
-    /** 요소를 큐에 추가 - 우선순위와 값을 받아서 객체로 만든 뒤 힙에 추가하고 정렬 */
-    push(priority, value) {
-        this.#heap.push({ priority, value });   // 힙 배열 끝에 노드 추가 - {우선순위, 값}
-        this.#bubbleUp();                       // 힙의 성질을 유지하도록 위로 올리기
+    // 요소 삽입: [priority, value]
+    put([priority, value]) {
+        this.#heap.push([priority, value]);
+        this.#bubbleUp();
     }
 
-    /** 우선순위가 가장 높은(숫자가 가장 작은) 요소를 꺼냄 */
-    pop() {
-        if (this.size() === 0) return null;     // 힙이 비어있으면 null 반환
-        const top = this.#heap[0];              // 최상단 노드를 저장
-        const last = this.#heap.pop();          // 마지막 요소를 꺼내고
-
-        if (this.size() !== 0) {                // 요소가 남아 있다면?
-            this.#heap[0] = last;               // 마지막 요소를 맨 위로 올리고-
-            this.#sinkDown();                   // 정렬
-        }
-
-        return top.value;                       // 최상단 노드 반환
+    // 요소 제거: 우선순위 가장 높은 요소 반환
+    get() {
+        if (this.#heap.length <= 1) return this.#heap.pop();
+        const min = this.#heap[0];
+        this.#heap[0] = this.#heap.pop();
+        this.#sinkDown();
+        return min;
     }
 
-    /** 최상단 요소를 확인 (제거하지 않음) */
+    // 최상단 요소 확인 (제거하지 않음)
     peek() {
-        return this.#heap[0].value || null;
+        return this.#heap[0];
     }
 
-    /** 현재 큐의 크기 반환 */
+    // 큐가 비었는지 여부 반환
+    isEmpty() {
+        return this.#heap.length === 0;
+    }
+
+    // 큐 크기 반환
     size() {
         return this.#heap.length;
     }
 
-    /** 힙 정렬 - 마지막 요소를 올바른 위치로 올림 */
+    // 요소가 삽입된 후 위로 올림
     #bubbleUp() {
-        let index = this.#heap.length - 1;                  // 마지막 요소의 인덱스
-        const node = this.#heap[index];                     // 이동할 노드
+        let index = this.#heap.length - 1;
+        const element = this.#heap[index];
 
-        // 부모 노드와 비교하면서 조건 만족하지 않으면 스왑
         while (index > 0) {
-            const parentIdx = Math.floor((index - 1) / 2);  // 부모 노드의 인덱스 계산
-            const parent = this.#heap[parentIdx];
+            const parentIndex = Math.floor((index - 1) / 2);
+            const parent = this.#heap[parentIndex];
 
-            // 부모 우선순위가 현재 우선순위보다 작거나, 우선순위가 같지만 값이 작으면 멈춤
-            if (parent.priority < node.priority ||
-                (parent.priority === node.priority && parent.value <= node.value)) {
-                    break;
-            }
-
-            this.#heap[index] = this.#heap[parentIdx];      // 부모를 아래로 이동
-            index = parentIdx;
+            if (element[0] > parent[0]) break;
+            this.#heap[index] = parent;
+            this.#heap[parentIndex] = element;
+            index = parentIndex;
         }
-
-        this.#heap[index] = node;                           // 현재 노드를 적절한 위치에 삽입
     }
 
-    /** 힙 정렬 - 최상단 요소를 아래로 내림 */
+    // 요소가 제거된 후 아래로 내림
     #sinkDown() {
-        let index = 0;                          // 시작 인덱스
+        let index = 0;
         const length = this.#heap.length;
-        const node = this.#heap[0];
+        const element = this.#heap[0];
 
         while (true) {
-            const leftIdx = 2 * index + 1;      // 왼쪽 자식 인덱스
-            const rightIdx = 2 * index + 2;     // 오른쪽 자식 인덱스
-            let smallest = index;               // 가장 작은 값을 가진 인덱스 추적
+            let left = 2 * index + 1;
+            let right = 2 * index + 2;
+            let smallest = index;
 
-            // 왼쪽 자식이 작고, 왼쪽의 우선순위가 작거나 우선순위가 같지만 왼쪽의 값이 더 작으면 그 인덱스로 변경
-            if (leftIdx < length && (
-                    this.#heap[leftIdx].priority < this.#heap[smallest].priority || (
-                            this.#heap[leftIdx].priority === this.#heap[smallest].priority &&
-                            this.#heap[leftIdx].value < this.#heap[smallest].value))) {
-                smallest = leftIdx;
-            }
+            if (left < length && this.#heap[left][0] < this.#heap[smallest][0]) smallest = left;
+            if (right < length && this.#heap[right][0] < this.#heap[smallest][0]) smallest = right;
 
-            // 오른쪽 자식도 비교
-            if (rightIdx < length && (
-                this.#heap[rightIdx].priority < this.#heap[smallest].priority || (
-                    this.#heap[rightIdx].priority === this.#heap[smallest].priority &&
-                    this.#heap[rightIdx].value < this.#heap[smallest].value))) {
-                smallest = rightIdx;
-            }
-
-            if (smallest === index) break;              // 자식 노드보다 작으면 종료
-            this.#heap[index] = this.#heap[smallest];   // 자식 노드와 위치 교환
+            if (smallest === index) break;
+            [this.#heap[index], this.#heap[smallest]] = [this.#heap[smallest], this.#heap[index]];
             index = smallest;
         }
-
-        this.#heap[index] = node; // 마지막 위치에 노드 삽입
     }
 }
 

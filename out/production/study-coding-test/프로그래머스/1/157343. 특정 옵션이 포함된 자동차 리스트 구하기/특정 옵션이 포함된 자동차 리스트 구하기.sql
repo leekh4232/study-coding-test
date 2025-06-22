@@ -1,1 +1,0 @@
-show create table CAR_RENTAL_COMPANY_CAR;
