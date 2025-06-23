@@ -1,104 +1,83 @@
-// 최소 힙을 구현하는 클래스
-class MinHeap {
-    // 힙을 저장할 배열 초기화
-    constructor() {
-        this.heap = [];
-    }
+// Heap 클래스 정의 (Min-Heap)
+class Heap {
+    // 힙 데이터 저장 배열
+    #heap = [];
 
-    // 요소를 힙에 삽입
+    // 값 추가
     push(value) {
-        // 배열 끝에 추가
-        this.heap.push(value);
-        // 위로 올리며 정렬 유지
-        this.bubbleUp();
+        this.#heap.push(value);
+        this.#bubbleUp();
     }
 
-    // 가장 작은 요소를 꺼냄
+    // 최상위 요소 제거 및 반환
     pop() {
-        // 힙이 비어 있으면 undefined 반환
-        if (this.heap.length === 0) return undefined;
+        if (this.#heap.length === 0) return null;
+        if (this.#heap.length === 1) return this.#heap.pop();
 
-        // 최솟값 저장
-        const min = this.heap[0];
-
-        // 마지막 요소를 꺼내 루트에 배치
-        const end = this.heap.pop();
-
-        // 요소가 남아 있다면 재정렬
-        if (this.heap.length > 0) {
-            this.heap[0] = end;
-            this.sinkDown();
-        }
-
-        // 꺼낸 최솟값 반환
-        return min;
+        const top = this.#heap[0];
+        this.#heap[0] = this.#heap.pop();
+        this.#sinkDown();
+        return top;
     }
 
-    // 힙 크기 반환
+    // 최상위 요소 반환 (삭제 안 함)
+    peek() {
+        return this.#heap[0] ?? null;
+    }
+
+    // 현재 힙 크기 반환
     size() {
-        return this.heap.length;
+        return this.#heap.length;
     }
 
-    // 삽입된 요소를 위로 올리며 힙 구조 유지
-    bubbleUp() {
-        let idx = this.heap.length - 1;
-        const element = this.heap[idx];
+    // 내부 메서드: 위로 올리기
+    #bubbleUp() {
+        let index = this.#heap.length - 1;
+        const value = this.#heap[index];
 
-        while (idx > 0) {
-            let parentIdx = Math.floor((idx - 1) / 2);
-            let parent = this.heap[parentIdx];
+        while (index > 0) {
+            const parentIndex = Math.floor((index - 1) / 2);
+            const parent = this.#heap[parentIndex];
 
-            // 소요 시간이 작을수록 우선순위 높음
-            if (element[0] >= parent[0]) break;
+            if (value[0] >= parent[0]) break;
 
-            // 부모와 교환
-            this.heap[parentIdx] = element;
-            this.heap[idx] = parent;
-            idx = parentIdx;
+            this.#heap[index] = parent;
+            this.#heap[parentIndex] = value;
+            index = parentIndex;
         }
     }
 
-    // 루트 요소를 아래로 내리며 힙 구조 유지
-    sinkDown() {
-        let idx = 0;
-        const length = this.heap.length;
-        const element = this.heap[0];
+    // 내부 메서드: 아래로 내리기
+    #sinkDown() {
+        let index = 0;
+        const length = this.#heap.length;
+        const value = this.#heap[0];
 
         while (true) {
-            let leftIdx = 2 * idx + 1;
-            let rightIdx = 2 * idx + 2;
-            let left, right;
-            let swap = null;
+            const leftIndex = 2 * index + 1;
+            const rightIndex = 2 * index + 2;
+            let smallest = index;
 
-            if (leftIdx < length) {
-                left = this.heap[leftIdx];
-                if (left[0] < element[0]) {
-                    swap = leftIdx;
-                }
+            if (leftIndex < length && this.#heap[leftIndex][0] < this.#heap[smallest][0]) {
+                smallest = leftIndex;
             }
 
-            if (rightIdx < length) {
-                right = this.heap[rightIdx];
-                if (
-                    (swap === null && right[0] < element[0]) ||
-                    (swap !== null && right[0] < left[0])
-                ) {
-                    swap = rightIdx;
-                }
+            if (rightIndex < length && this.#heap[rightIndex][0] < this.#heap[smallest][0]) {
+                smallest = rightIndex;
             }
 
-            if (swap === null) break;
+            if (smallest === index) break;
 
-            this.heap[idx] = this.heap[swap];
-            this.heap[swap] = element;
-            idx = swap;
+            this.#heap[index] = this.#heap[smallest];
+            this.#heap[smallest] = value;
+            index = smallest;
         }
     }
 }
 
-// 평균 반환 시간을 최소화하는 디스크 스케줄링 함수
+// 디스크 컨트롤러 문제 해결 함수
 function solution(jobs) {
-    // 누적 반환 시간
+    // 총 반환 시간 누적 변수
     let answer = 0;
 
     // 현재 시간
@@ -110,40 +89,41 @@ function solution(jobs) {
     // 마지막 작업 시작 시각
     let start = -1;
 
-    // 최소 힙 (작업 소요 시간 기준)
-    const heap = new MinHeap();
+    // 최소 힙 생성
+    const heap = new Heap();
 
-    // 전체 작업이 처리될 때까지 반복
+    // 모든 작업을 처리할 때까지 반복
     while (i < jobs.length) {
-        // 현재 시간까지 도착한 작업을 힙에 삽입
-        for (let j = 0; j < jobs.length; j++) {
-            const [request, duration] = jobs[j];
+        // 현재 시간까지 요청된 작업을 힙에 추가
+        for (let job of jobs) {
+            const [request, duration] = job;
 
             if (start < request && request <= now) {
-                // (작업 소요 시간, 요청 시각) 형식으로 삽입
+                // (소요 시간, 요청 시간) 형식으로 저장
                 heap.push([duration, request]);
             }
         }
 
-        // 처리할 작업이 있다면
+        // 힙에 처리할 작업이 있는 경우
         if (heap.size() > 0) {
-            // 가장 소요 시간이 짧은 작업 꺼냄
+            // 소요 시간이 가장 짧은 작업 꺼내기
             const [duration, request] = heap.pop();
 
-            // 작업 시작 시각 업데이트
+            // 작업 시작 시간 업데이트
             start = now;
 
-            // 작업 소요 시간만큼 현재 시간 증가
+            // 현재 시간 증가
             now += duration;
 
-            // 반환 시간 누적: 종료 시간 - 요청 시간
+            // 반환 시간 누적
             answer += now - request;
 
-            // 작업 처리 수 증가
-            i++;
+            // 처리된 작업 수 증가
+            i += 1;
+
         } else {
-            // 대기 중인 작업이 없다면 시간 1 증가
-            now++;
+            // 대기 작업이 없으면 현재 시간 1 증가
+            now += 1;
         }
     }
 
@@ -151,5 +131,5 @@ function solution(jobs) {
     return Math.floor(answer / jobs.length);
 }
 
-// 테스트 케이스 실행
-console.log(solution([[0, 3], [1, 9], [3, 5]]));  // 8
+// 테스트 실행
+console.log(solution([[0, 3], [1, 9], [3, 5]])); // 8
