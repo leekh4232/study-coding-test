@@ -39,7 +39,7 @@ class Heap {
             const parentIndex = Math.floor((index - 1) / 2);
             const parent = this.#heap[parentIndex];
 
-            if (value > parent) break;
+            if (value >= parent) break;
 
             this.#heap[index] = parent;
             this.#heap[parentIndex] = value;
@@ -75,31 +75,59 @@ class Heap {
     }
 }
 
-// 디스크 컨트롤러 문제 올바른 구현
+// 디스크 컨트롤러 문제 해결 함수
 function solution(jobs) {
-    let now = 0;
+    // 총 반환 시간 누적 변수
     let answer = 0;
-    let done = 0;
-    jobs.sort((a,b) => a[0] - b[0]);      // (1) 요청 시각 기준 정렬
-    let idx = 0;
+
+    // 현재 시간
+    let now = 0;
+
+    // 처리된 작업 수
+    let i = 0;
+
+    // 마지막 작업 시작 시각
+    let start = -1;
+
+    // 최소 힙 생성
     const heap = new Heap();
 
-    while (done < jobs.length) {
-        while (idx < jobs.length && jobs[idx][0] <= now) {
-            heap.push([jobs[idx][1], jobs[idx][0]]);
-            idx++;
+    // 모든 작업을 처리할 때까지 반복
+    while (i < jobs.length) {
+        // 현재 시간까지 요청된 작업을 힙에 추가
+        for (let job of jobs) {
+            const [request, duration] = job;
+
+            if (start < request && request <= now) {
+                // (소요 시간, 요청 시간) 형식으로 저장
+                heap.push([duration, request]);
+            }
         }
 
+        // 힙에 처리할 작업이 있는 경우
         if (heap.size() > 0) {
-            const [dur, req] = heap.pop();
-            now += dur;
-            answer += now - req;
-            done++;
+            // 소요 시간이 가장 짧은 작업 꺼내기
+            const [duration, request] = heap.pop();
+
+            // 작업 시작 시간 업데이트
+            start = now;
+
+            // 현재 시간 증가
+            now += duration;
+
+            // 반환 시간 누적
+            answer += now - request;
+
+            // 처리된 작업 수 증가
+            i += 1;
+
         } else {
-            now = jobs[idx][0];
+            // 대기 작업이 없으면 현재 시간 1 증가
+            now += 1;
         }
     }
 
+    // 평균 반환 시간의 정수 부분 반환
     return Math.floor(answer / jobs.length);
 }
 

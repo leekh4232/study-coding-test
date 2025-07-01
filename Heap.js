@@ -39,7 +39,7 @@ class Heap {
             const parentIndex = Math.floor((index - 1) / 2);
             const parent = this.#heap[parentIndex];
 
-            if (value >= parent) break;
+            if (value > parent) break;
 
             this.#heap[index] = parent;
             this.#heap[parentIndex] = value;
