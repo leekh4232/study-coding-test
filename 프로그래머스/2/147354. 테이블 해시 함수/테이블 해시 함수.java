@@ -1,5 +1,3 @@
-// https://school.programmers.co.kr/learn/courses/30/lessons/147354
-
 import java.util.Arrays; // 배열 정렬을 위해 Arrays 클래스를 임포트한다.
 import java.util.Comparator; // 사용자 정의 정렬을 위해 Comparator 인터페이스를 임포트한다.
 
