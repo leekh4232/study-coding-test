@@ -1,6 +1,5 @@
 // Solution 클래스 정의
 public class Solution {
-
     // solution 메서드는 두 정수를 입력받아 그 합을 반환함
     public static int solution(int num1, int num2) {
         // num1과 num2를 더한 값을 answer 변수에 저장
