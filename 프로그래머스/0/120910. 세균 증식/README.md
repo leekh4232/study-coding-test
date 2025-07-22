@@ -1,6 +1,6 @@
 # [level 0] 세균 증식 - 120910 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120910?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120910) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 07월 22일 08:36:03
+2025년 07월 22일 12:22:05
 
 ### 문제 설명
 
