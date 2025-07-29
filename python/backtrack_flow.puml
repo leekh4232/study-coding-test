@@ -1,0 +1,54 @@
+@startuml backtrack_flow
+skinparam dpi 300
+!define SEQUENCE_ARROW_STYLE thick
+!theme plain
+
+' 한글 폰트 설정
+skinparam defaultFontName "Malgun Gothic"
+skinparam titleFontName "Malgun Gothic"
+skinparam noteFontName "Malgun Gothic"
+skinparam legendFontName "Malgun Gothic"\
+
+title 백트래킹 알고리즘 흐름도 (N=3)
+
+start
+
+:초기화: path=[], used=[F,F,F,F], N=3;
+
+:backtrack([], [F,F,F,F], 3) 호출;
+
+repeat :i = 1부터 N까지 반복;
+
+  if (used[i] == False?) then (yes)
+    :숫자 i 선택 전 상태 출력;
+    :used[i] = True;
+    :(1) used 상태 출력;
+    :path.append(i);
+    :숫자 i 선택 후 상태 출력;
+
+    if (len(path) == N?) then (yes)
+      :결과 출력;
+      :return;
+    else (no)
+      :백트래킹 전 상태 출력;
+      :재귀 호출: backtrack(path, used, N);
+      note right
+        더 깊은 레벨로 들어가서
+        다음 숫자를 선택
+      end note
+    endif
+
+    :path.pop() - 마지막 숫자 제거;
+    :used[i] = False - 사용 표시 해제;
+    :(2) used 상태 출력;
+    :백트래킹 후 상태 출력;
+
+  else (no)
+    :이미 사용된 숫자이므로 건너뛰기;
+  endif
+
+repeat while (i < N)
+
+stop
+
+@enduml
