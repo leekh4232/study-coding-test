@@ -1,0 +1,62 @@
+@startuml union_find_operations
+skinparam dpi 300
+!theme plain
+
+' 한글 폰트 설정
+skinparam defaultFontName "Malgun Gothic"
+skinparam titleFontName "Malgun Gothic"
+skinparam noteFontName "Malgun Gothic"
+
+title Union-Find 연산별 상세 흐름
+
+start
+
+partition "**Find 연산 (경로 압축)**" {
+  :find(x) 호출;
+
+  if (parent[x] == x?) then (루트 노드)
+    :return x;
+    stop
+  else (자식 노드)
+    :재귀 호출: find(parent[x]);
+    :경로 압축: parent[x] = 루트값;
+    :return parent[x];
+    stop
+  endif
+}
+
+partition "**Union 연산**" {
+  :union(x, y) 호출;
+
+  :rootX = find(x);
+  :rootY = find(y);
+
+  if (rootX == rootY?) then (같은 집합)
+    :이미 연결됨 - 종료;
+    stop
+  else (다른 집합)
+    :parent[rootY] = rootX;
+    note right: 보통은 Union by Rank 적용
+    :집합 합병 완료;
+    stop
+  endif
+}
+
+partition "**연결성 확인**" {
+  :is_union(x, y) 호출;
+
+  :return find(x) == find(y);
+  stop
+}
+
+floating note left
+  **시간 복잡도:**
+  - Find: O(α(n)) ≈ O(1)
+  - Union: O(α(n)) ≈ O(1)
+  - 여기서 α는 아커만 함수의 역함수
+
+  **공간 복잡도:**
+  - O(n) - parent 배열
+end note
+
+@enduml
