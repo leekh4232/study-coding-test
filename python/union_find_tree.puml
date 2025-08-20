@@ -1,0 +1,103 @@
+@startuml union_find_tree
+skinparam dpi 300
+!theme plain
+
+' 한글 폰트 설정
+skinparam defaultFontName "Malgun Gothic"
+skinparam titleFontName "Malgun Gothic"
+skinparam noteFontName "Malgun Gothic"
+skinparam legendFontName "Malgun Gothic"
+
+title Union-Find 트리 구조 변화 과정
+
+skinparam rectangle {
+  BackgroundColor LightBlue
+  BorderColor Black
+}
+
+skinparam note {
+  BackgroundColor Yellow
+  BorderColor Orange
+}
+
+!define TREE(name,title) rectangle title as name
+
+' 초기 상태
+TREE(init, "초기 상태\n각 노드가 독립적인 집합")
+note top of init
+  parent = [0,1,2,3,4,5,6,7,8]
+  집합: {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}
+end note
+
+' merge(1,2) 후
+TREE(step1, "merge(1,2) 후\n")
+note top of step1
+  parent = [0,1,1,3,4,5,6,7,8]
+  집합: {1,2}, {3}, {4}, {5}, {6}, {7}, {8}
+
+  트리 구조:
+  1 (루트)
+  └── 2
+end note
+
+' merge(4,5) 후
+TREE(step2, "merge(4,5) 후\n")
+note top of step2
+  parent = [0,1,1,3,4,4,6,7,8]
+  집합: {1,2}, {3}, {4,5}, {6}, {7}, {8}
+
+  트리 구조:
+  1 (루트)    4 (루트)
+  └── 2       └── 5
+end note
+
+' merge(5,6) 후
+TREE(step3, "merge(5,6) 후\n")
+note top of step3
+  parent = [0,1,1,3,4,4,4,7,8]
+  집합: {1,2}, {3}, {4,5,6}, {7}, {8}
+
+  트리 구조:
+  1 (루트)    4 (루트)
+  └── 2       ├── 5
+              └── 6
+end note
+
+' merge(1,5) 후 (최종)
+TREE(final, "merge(1,5) 후 (최종)\n경로 압축 적용")
+note top of final
+  parent = [0,1,1,3,1,1,1,7,8]
+  집합: {1,2,4,5,6}, {3}, {7}, {8}
+
+  트리 구조 (경로 압축 후):
+  1 (루트)
+  ├── 2
+  ├── 4
+  ├── 5
+  └── 6
+end note
+
+init --> step1 : "merge(1,2)"
+step1 --> step2 : "merge(4,5)"
+step2 --> step3 : "merge(5,6)"
+step3 --> final : "merge(1,5)"
+
+legend bottom
+  **Union-Find의 핵심 개념:**
+
+  **Find 연산 (경로 압축):**
+  - 루트 노드를 찾으면서 경로상의 모든 노드가
+    직접 루트를 가리키도록 최적화
+  - 시간 복잡도: O(α(n)) ≈ O(1)
+
+  **Union 연산:**
+  - 두 집합의 루트를 찾아서 하나를 다른 하나의 자식으로 연결
+  - 보통 작은 트리를 큰 트리에 붙임 (Union by Rank)
+
+  **응용 분야:**
+  - 크루스칼 알고리즘 (최소 신장 트리)
+  - 네트워크 연결성 확인
+  - 동적 연결성 문제
+end legend
+
+@enduml

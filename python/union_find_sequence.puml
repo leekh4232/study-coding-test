@@ -1,0 +1,91 @@
+@startuml union_find_sequence
+skinparam dpi 300
+!theme plain
+
+' 한글 폰트 설정
+skinparam defaultFontName "Malgun Gothic"
+skinparam titleFontName "Malgun Gothic"
+skinparam noteFontName "Malgun Gothic"
+
+title Union-Find 알고리즘 실행 시퀀스
+
+participant "Main" as M
+participant "Union-Find" as UF
+
+M -> UF: 초기화: parent = [0,1,2,3,4,5,6,7,8]
+activate UF
+
+note right of UF
+  초기 상태:
+  각 노드가 자기 자신을 부모로 가짐
+  1: parent[1]=1
+  2: parent[2]=2
+  4: parent[4]=4
+  5: parent[5]=5
+  6: parent[6]=6
+end note
+
+M -> UF: merge(1, 2)
+UF -> UF: find(1) → 1
+UF -> UF: find(2) → 2
+UF -> UF: parent[2] = 1
+UF -> M: 완료
+
+note right of UF
+  merge(1,2) 후:
+  parent = [0,1,1,3,4,5,6,7,8]
+  집합: {1,2}, {3}, {4}, {5}, {6}, {7}, {8}
+end note
+
+M -> UF: merge(4, 5)
+UF -> UF: find(4) → 4
+UF -> UF: find(5) → 5
+UF -> UF: parent[5] = 4
+UF -> M: 완료
+
+note right of UF
+  merge(4,5) 후:
+  parent = [0,1,1,3,4,4,6,7,8]
+  집합: {1,2}, {3}, {4,5}, {6}, {7}, {8}
+end note
+
+M -> UF: merge(5, 6)
+UF -> UF: find(5) → find(4) → 4
+UF -> UF: find(6) → 6
+UF -> UF: parent[6] = 4
+UF -> M: 완료
+
+note right of UF
+  merge(5,6) 후:
+  parent = [0,1,1,3,4,4,4,7,8]
+  집합: {1,2}, {3}, {4,5,6}, {7}, {8}
+end note
+
+M -> UF: is_union(2, 4)
+UF -> UF: find(2) → find(1) → 1
+UF -> UF: find(4) → 4
+UF -> UF: 1 != 4
+UF -> M: False
+
+M -> UF: merge(1, 5)
+UF -> UF: find(1) → 1
+UF -> UF: find(5) → find(4) → 4
+UF -> UF: parent[4] = 1
+UF -> M: 완료
+
+note right of UF
+  merge(1,5) 후:
+  parent = [0,1,1,3,1,1,1,7,8]
+  집합: {1,2,4,5,6}, {3}, {7}, {8}
+  경로 압축으로 모든 노드가 루트 1을 직접 가리킴
+end note
+
+M -> UF: is_union(2, 4)
+UF -> UF: find(2) → 1
+UF -> UF: find(4) → 1
+UF -> UF: 1 == 1
+UF -> M: True
+
+deactivate UF
+
+@enduml

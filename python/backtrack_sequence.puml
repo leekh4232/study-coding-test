@@ -1,0 +1,101 @@
+@startuml backtrack_sequence
+skinparam dpi 300
+!theme plain
+
+' 한글 폰트 설정
+skinparam defaultFontName "Malgun Gothic"
+skinparam titleFontName "Malgun Gothic"
+skinparam noteFontName "Malgun Gothic"
+skinparam legendFontName "Malgun Gothic"
+
+title 백트래킹 알고리즘 실행 시퀀스 (N=3, 첫 번째 순열 생성 과정)
+
+participant "Main" as M
+participant "backtrack(level=0)" as B0
+participant "backtrack(level=1)" as B1
+participant "backtrack(level=2)" as B2
+participant "backtrack(level=3)" as B3
+
+M -> B0: backtrack([], [F,F,F,F], 3)
+activate B0
+
+note right of B0
+  path = []
+  used = [F,F,F,F]
+  len(path) = 0 < 3
+end note
+
+B0 -> B0: i=1, used[1]=False
+B0 -> B0: "숫자 1 선택 전: []"
+B0 -> B0: used[1] = True
+B0 -> B0: "(1) ---> [F,T,F,F]"
+B0 -> B0: path.append(1)
+B0 -> B0: "숫자 1 선택 후: [1]"
+B0 -> B0: "숫자 1 백트래킹 전: [1]"
+
+B0 -> B1: backtrack([1], [F,T,F,F], 3)
+activate B1
+
+note right of B1
+  path = [1]
+  used = [F,T,F,F]
+  len(path) = 1 < 3
+end note
+
+B1 -> B1: i=1, used[1]=True (skip)
+B1 -> B1: i=2, used[2]=False
+B1 -> B1: "숫자 2 선택 전: [1]"
+B1 -> B1: used[2] = True
+B1 -> B1: "(1) ---> [F,T,T,F]"
+B1 -> B1: path.append(2)
+B1 -> B1: "숫자 2 선택 후: [1,2]"
+B1 -> B1: "숫자 2 백트래킹 전: [1,2]"
+
+B1 -> B2: backtrack([1,2], [F,T,T,F], 3)
+activate B2
+
+note right of B2
+  path = [1,2]
+  used = [F,T,T,F]
+  len(path) = 2 < 3
+end note
+
+B2 -> B2: i=1, used[1]=True (skip)
+B2 -> B2: i=2, used[2]=True (skip)
+B2 -> B2: i=3, used[3]=False
+B2 -> B2: "숫자 3 선택 전: [1,2]"
+B2 -> B2: used[3] = True
+B2 -> B2: "(1) ---> [F,T,T,T]"
+B2 -> B2: path.append(3)
+B2 -> B2: "숫자 3 선택 후: [1,2,3]"
+B2 -> B2: "숫자 3 백트래킹 전: [1,2,3]"
+
+B2 -> B3: backtrack([1,2,3], [F,T,T,T], 3)
+activate B3
+
+note right of B3
+  path = [1,2,3]
+  len(path) = 3 == N
+  종료 조건 만족!
+end note
+
+B3 -> B3: "결과: [1,2,3]"
+B3 -> B2: return
+deactivate B3
+
+B2 -> B2: path.pop() → path = [1,2]
+B2 -> B2: used[3] = False
+B2 -> B2: "(2) ---> [F,T,T,F]"
+B2 -> B2: "숫자 3 백트래킹 후: [1,2]"
+B2 -> B1: return
+deactivate B2
+
+B1 -> B1: path.pop() → path = [1]
+B1 -> B1: used[2] = False
+B1 -> B1: "(2) ---> [F,T,F,F]"
+B1 -> B1: "숫자 2 백트래킹 후: [1]"
+
+B1 -> B1: i=3, used[3]=False
+note right of B1: 다음 숫자 3으로 계속 진행...
+
+@enduml
