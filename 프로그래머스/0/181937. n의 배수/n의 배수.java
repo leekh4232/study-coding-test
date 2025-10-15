@@ -5,7 +5,6 @@ class Solution {
     public static int solution(int num, int n) {
         // num을 n으로 나눈 나머지가 0이면 배수이므로 1, 아니면 0 반환
         int answer = num % n == 0 ? 1 : 0;
-
         // 결과 반환
         return answer;
     }
